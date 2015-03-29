@@ -3,7 +3,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -32,7 +31,7 @@ public class Calculator extends JFrame
 	private JTextArea calcArg;
 	private JTextArea calcText;
 	private GridBagConstraints frameLayout;
-	private JButton but0;
+	private JButton but0;			
 	private JButton but1;
 	private JButton but2;
 	private JButton but3;
@@ -58,7 +57,7 @@ public class Calculator extends JFrame
 	private String equal = "=";
 	private JTable calcOut;
 	private DefaultTableModel tableModel;
-	
+
 	public Calculator()
 	{
 		super("Calculator");
@@ -67,12 +66,12 @@ public class Calculator extends JFrame
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		
+
 		setLayout(new GridBagLayout());
 		GridBagConstraints frameLayout = new GridBagConstraints();
-		
+
 		frameLayout.fill = GridBagConstraints.BOTH;
-		
+
 		frameLayout.gridx = 0; 
 		frameLayout.gridy = 0;
 		frameLayout.weightx = 1; 
@@ -80,7 +79,7 @@ public class Calculator extends JFrame
 		frameLayout.gridwidth = 3;
 		frameLayout.gridheight = 1;		
 		add(new CalcPanel(), frameLayout);
-		
+
 		frameLayout.gridx = 1; 
 		frameLayout.gridy = 1;
 		frameLayout.weightx = 1; 
@@ -88,7 +87,7 @@ public class Calculator extends JFrame
 		frameLayout.gridwidth = 1;
 		frameLayout.gridheight = 1;
 		add(new ButtonPanel(), frameLayout);
-		
+
 		frameLayout.gridx = 2; 
 		frameLayout.gridy =1;
 		frameLayout.weightx = 1; 
@@ -97,27 +96,27 @@ public class Calculator extends JFrame
 		frameLayout.gridheight = 1;
 		add(new OutputPanel(), frameLayout);
 	}
-	
+
 	public class PanelTemplate extends JPanel
 	{
 		private Border raisedbevel, loweredbevel, compound;
-		
+
 		public PanelTemplate()
 		{
-			
+
 			raisedbevel = BorderFactory.createRaisedBevelBorder();
 			loweredbevel = BorderFactory.createLoweredBevelBorder();
 			compound = BorderFactory.createCompoundBorder(raisedbevel, loweredbevel);
-			
+
 			setBackground(Color.DARK_GRAY);
 			setForeground(Color.BLACK);
 			setBorder(compound);
 			setPreferredSize(getPreferredSize());
-		
+
 			setLayout(new GridBagLayout());
 			frameLayout = new GridBagConstraints();
 			frameLayout.fill = GridBagConstraints.BOTH;
-		
+
 			frameLayout.gridx = 1; 
 			frameLayout.gridy = 1;
 			frameLayout.weightx = 1; 
@@ -126,14 +125,14 @@ public class Calculator extends JFrame
 			frameLayout.gridheight = 1;
 		}
 	}
-	
+
 	public class CalcPanel extends PanelTemplate
 	{
 		public CalcPanel()
 		{
 			frameLayout.gridx = 0; 
 			frameLayout.gridy = 0;
-			
+
 			calcArg = new JTextArea();
 			calcArg.setText("");
 			calcArg.setEditable(false);
@@ -142,10 +141,10 @@ public class Calculator extends JFrame
 			calcArg.setFont(new Font("Tahoma", Font.BOLD, 20));
 			calcArg.setOpaque(true);
 			add(calcArg);
-			
+
 			frameLayout.gridx = 1; 
 			frameLayout.gridy = 0;
-			
+
 			calcText = new JTextArea();
 			calcText.setText("");
 			calcText.setEditable(false);
@@ -157,7 +156,7 @@ public class Calculator extends JFrame
 			add(calcText);
 		}
 	}
-	
+
 	public class ButtonTemp extends JButton
 	{
 		public ButtonTemp()
@@ -167,7 +166,7 @@ public class Calculator extends JFrame
 			setForeground(Color.DARK_GRAY);
 		}
 	}
-	
+
 	public class ButtonPanel extends PanelTemplate implements ActionListener
 	{
 		public ButtonPanel()
@@ -179,7 +178,7 @@ public class Calculator extends JFrame
 			frameLayout.gridwidth = 2;
 			add(clear, frameLayout);
 			clear.addActionListener(this);
-			
+
 			clearTable = new ButtonTemp();
 			clearTable.setText("Clr Tbl");
 			frameLayout.gridx = 2; 
@@ -187,7 +186,7 @@ public class Calculator extends JFrame
 			frameLayout.gridwidth = 2;
 			add(clearTable, frameLayout);
 			clearTable.addActionListener(this);
-			
+
 			but7 = new ButtonTemp();
 			but7.setText("7");
 			frameLayout.gridx = 0; 
@@ -197,8 +196,8 @@ public class Calculator extends JFrame
 			but7.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD7, 0), "7");
 			but7.getActionMap().put("7", new ButtonAction());
 			add(but7, frameLayout);
-			but7.addActionListener(this);
-			
+			but7.addActionListener(new NumberAppender());
+
 			but8 = new ButtonTemp();
 			but8.setText("8");
 			frameLayout.gridx = 1; 
@@ -208,8 +207,8 @@ public class Calculator extends JFrame
 			but8.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD8, 0), "8");
 			but8.getActionMap().put("8", new ButtonAction());
 			add(but8, frameLayout);
-			but8.addActionListener(this);
-			
+			but8.addActionListener(new NumberAppender());
+
 			but9 = new ButtonTemp();
 			but9.setText("9");
 			frameLayout.gridx = 2; 
@@ -219,8 +218,8 @@ public class Calculator extends JFrame
 			but9.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD9, 0), "9");
 			but9.getActionMap().put("9", new ButtonAction());
 			add(but9, frameLayout);
-			but9.addActionListener(this);
-			
+			but9.addActionListener(new NumberAppender());
+
 			div = new ButtonTemp();
 			div.setText("/");
 			frameLayout.gridx = 3; 
@@ -231,7 +230,7 @@ public class Calculator extends JFrame
 			div.getActionMap().put("/", new ButtonAction());
 			add(div, frameLayout);
 			div.addActionListener(this);
-			
+
 			but4 = new ButtonTemp();
 			but4.setText("4");
 			frameLayout.gridx = 0; 
@@ -241,8 +240,8 @@ public class Calculator extends JFrame
 			but4.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0), "4");
 			but4.getActionMap().put("4", new ButtonAction());
 			add(but4, frameLayout);
-			but4.addActionListener(this);
-			
+			but4.addActionListener(new NumberAppender());
+
 			but5 = new ButtonTemp();
 			but5.setText("5");
 			frameLayout.gridx = 1; 
@@ -252,8 +251,8 @@ public class Calculator extends JFrame
 			but5.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD5, 0), "5");
 			but5.getActionMap().put("5", new ButtonAction());
 			add(but5, frameLayout);
-			but5.addActionListener(this);
-			
+			but5.addActionListener(new NumberAppender());
+
 			but6 = new ButtonTemp();
 			but6.setText("6");
 			frameLayout.gridx = 2; 
@@ -263,8 +262,8 @@ public class Calculator extends JFrame
 			but6.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD6, 0), "6");
 			but6.getActionMap().put("6", new ButtonAction());
 			add(but6, frameLayout);
-			but6.addActionListener(this);
-			
+			but6.addActionListener(new NumberAppender());
+
 			mult = new ButtonTemp();
 			mult.setText("*");
 			frameLayout.gridx = 3; 
@@ -275,7 +274,7 @@ public class Calculator extends JFrame
 			mult.getActionMap().put("*", new ButtonAction());
 			add(mult, frameLayout);
 			mult.addActionListener(this);
-			
+
 			but1 = new ButtonTemp();
 			but1.setText("1");
 			frameLayout.gridx = 0; 
@@ -285,8 +284,8 @@ public class Calculator extends JFrame
 			but1.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0), "1");
 			but1.getActionMap().put("1", new ButtonAction());
 			add(but1, frameLayout);
-			but1.addActionListener(this);
-			
+			but1.addActionListener(new NumberAppender());
+
 			but2 = new ButtonTemp();
 			but2.setText("2");
 			frameLayout.gridx = 1; 
@@ -296,8 +295,8 @@ public class Calculator extends JFrame
 			but2.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0), "2");
 			but2.getActionMap().put("2", new ButtonAction());
 			add(but2, frameLayout);
-			but2.addActionListener(this);
-			
+			but2.addActionListener(new NumberAppender());
+
 			but3 = new ButtonTemp();
 			but3.setText("3");
 			frameLayout.gridx = 2; 
@@ -307,8 +306,8 @@ public class Calculator extends JFrame
 			but3.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0), "3");
 			but3.getActionMap().put("3", new ButtonAction());
 			add(but3, frameLayout);	
-			but3.addActionListener(this);
-			
+			but3.addActionListener(new NumberAppender());
+
 			sub = new ButtonTemp();
 			sub.setText("-");
 			frameLayout.gridx = 3; 
@@ -319,7 +318,7 @@ public class Calculator extends JFrame
 			sub.getActionMap().put("-", new ButtonAction());
 			add(sub, frameLayout);
 			sub.addActionListener(this);
-			
+
 			back = new ButtonTemp();
 			back.setText("Del");
 			frameLayout.gridx = 4; 
@@ -330,7 +329,7 @@ public class Calculator extends JFrame
 			back.getActionMap().put("Backspace", new ButtonAction());
 			add(back, frameLayout);
 			back.addActionListener(this);
-			
+
 			enter = new ButtonTemp();
 			enter.setText("=");
 			frameLayout.gridx = 4; 
@@ -342,7 +341,7 @@ public class Calculator extends JFrame
 			enter.getActionMap().put(".", new ButtonAction());
 			add(enter, frameLayout);
 			enter.addActionListener(this);
-			
+
 			but0 = new ButtonTemp();
 			but0.setText("0");
 			frameLayout.gridx = 0; 
@@ -353,8 +352,8 @@ public class Calculator extends JFrame
 			but0.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD0, 0), "0");
 			but0.getActionMap().put("0", new ButtonAction());
 			add(but0, frameLayout);
-			but0.addActionListener(this);
-			
+			but0.addActionListener(new NumberAppender());
+
 			deci = new ButtonTemp();
 			deci.setText(".");
 			frameLayout.gridx = 2; 
@@ -365,7 +364,7 @@ public class Calculator extends JFrame
 			deci.getActionMap().put(".", new ButtonAction());
 			add(deci, frameLayout);
 			deci.addActionListener(this);
-			
+
 			plus = new ButtonTemp();
 			plus.setText("+");
 			frameLayout.gridx = 3; 
@@ -379,52 +378,22 @@ public class Calculator extends JFrame
 			plus.addActionListener(this);
 		}
 
+		class NumberAppender implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JButton clicked = (JButton)e.getSource();
+				calcText.append(clicked.getText());
+			}
+
+		}
+
 		public void actionPerformed(ActionEvent e)
 		{
 			DecimalFormat df = new DecimalFormat("#.########");
 			JButton clicked = (JButton)e.getSource();
-			
-			if(clicked == but0)
-			{
-				calcText.append("0");
-			}
-			else if(clicked == but1)
-			{
-				calcText.append("1");
-			}
-			else if(clicked == but2)
-			{
-				calcText.append("2");
-			}
-			else if(clicked == but3)
-			{
-				calcText.append("3");
-			}
-			else if(clicked == but4)
-			{
-				calcText.append("4");
-			}
-			else if(clicked == but5)
-			{
-				calcText.append("5");
-			}
-			else if(clicked == but6)
-			{
-				calcText.append("6");
-			}
-			else if(clicked == but7)
-			{
-				calcText.append("7");
-			}
-			else if(clicked == but8)
-			{
-				calcText.append("8");
-			}
-			else if(clicked == but9)
-			{
-				calcText.append("9");
-			}
-			else if(clicked == deci)
+
+			if(clicked == deci)
 			{
 				String d = calcText.getText();
 				if(d.contains("."))
@@ -490,7 +459,7 @@ public class Calculator extends JFrame
 			else if((clicked == enter) && (calcText.getText() != ""))
 			{
 				num2 = Double.parseDouble(calcText.getText());
-				
+
 				if(argument == "+")
 				{
 					answer = num1 + num2;
@@ -528,7 +497,7 @@ public class Calculator extends JFrame
 			}
 		}
 	}
-	
+
 	public class ButtonAction extends AbstractAction
 	{
 		public void actionPerformed(ActionEvent e)
@@ -537,32 +506,32 @@ public class Calculator extends JFrame
 			temp.doClick();
 		}
 	}
-	
+
 	public class OutputPanel extends PanelTemplate
 	{
 		private String[] colNames = {"Num 1", "", "Num 2", "", "Answer"};
 		private int cellRow;
 		private int cellCol;
-		
+
 		public OutputPanel()
 		{
 			JScrollPane scrollPane = new JScrollPane();
 			JMenuItem copyCell = new JMenuItem("copy selected cell to calculator");
 			JPopupMenu popupCopy = new JPopupMenu();
 			popupCopy.add(copyCell);
-			
+
 			scrollPane.getViewport().setBackground(Color.DARK_GRAY);
 			scrollPane.getViewport().setForeground(Color.LIGHT_GRAY);
 			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			add(scrollPane, frameLayout);
-			
+
 			tableModel = new DefaultTableModel(colNames, 0);
 			calcOut = new JTable(tableModel);
 			calcOut.getColumnModel().getColumn(1).setPreferredWidth(10);
 			calcOut.getColumnModel().getColumn(3).setPreferredWidth(10);
 			calcOut.setBackground(Color.LIGHT_GRAY);
 			calcOut.setForeground(Color.BLACK);
-			
+
 			calcOut.addMouseListener(new MouseAdapter()
 			{
 				public void mousePressed(MouseEvent ev)
@@ -578,7 +547,7 @@ public class Calculator extends JFrame
 					}
 				}
 			});
-			
+
 			copyCell.addActionListener(new ActionListener()
 			{
 				public void actionPerformed(ActionEvent e)
@@ -587,7 +556,7 @@ public class Calculator extends JFrame
 					calcText.setText(String.valueOf(cell));
 				}
 			});
-			
+
 			scrollPane.getViewport().add(calcOut);
 		}
 	}
